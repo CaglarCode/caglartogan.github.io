@@ -1,386 +1,920 @@
-<!DOCTYPE HTML>
-<!--
-	Dimension by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>Caglar Togan</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="static/assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="static/assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Caglar Togan — Live Streaming &amp; Broadcast Engineer</title>
+<meta name="description" content="Caglar Togan — Live Streaming &amp; Broadcast Engineer. AWS cloud streaming, video encoding (AVC / H.264 / HEVC / AV1), HLS / DASH / SRT delivery, SCTE-35 ad insertion, and high-profile live event broadcast." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ece9e1; --bg-soft:#f2efe7; --bg-dark:#0a0a0a;
+    --ink:#161513; --ink-soft:#2a2722;
+    --muted:#6a6760; --dim:#a8a59c; --light:#f4f1ea;
+    --accent:#c0392b;
+    --rule:rgba(10,10,10,0.14);
+    --rule-strong:rgba(10,10,10,0.42);
+    --rule-light:rgba(255,255,255,0.16);
+    --font-mono:'DM Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+    --font-display:'Instrument Serif', Georgia, 'Times New Roman', serif;
 
-		<!-- Wrapper -->
-			<div id="wrapper">
+    --t-display-xl: clamp(2.8rem, 9vw, 8rem);
+    --t-display-lg: clamp(2.6rem, 6.2vw, 5.4rem);
+    --t-display-md: clamp(2.25rem, 5.4vw, 4.4rem);
+    --t-display-sm: clamp(1.7rem, 3vw, 2.7rem);
+    --t-display-xs: clamp(2.6rem, 6vw, 5.2rem);
+    --t-body: 1rem;
+    --t-meta: 0.72rem;
+    --pad: clamp(1.4rem, 5vw, 5.5rem);
+  }
 
-				<!-- Header -->
-					<header id="header">
-						<div class="logo">
-							  <span class="icon fa-star"></span>
-						</div>
-						<div class="content">
-							<div class="inner">
-								<h1>CAGLAR TOGAN</h1>
-								<div>VIDEO ENGINEER AT PARAMOUNT+</div>
-								<div><span style="font-size: 0.8rem; letter-spacing: 0.2rem; text-transform: uppercase;">A full-stack PYTHON DEVELOPER</span>
-								</div>	
-								
-							</div>
-						</div>
-						<nav>
-							<ul>
-								<li><a href="#intro">Intro</a></li>
-								<li><a href="#work">Work</a></li>
-								<li><a href="#about">About</a></li>
-								<li><a href="#contact">Contact</a></li>
-								<!--<li><a href="#elements">Elements</a></li>-->
-							</ul>
-						</nav>
-					</header>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  html.menu-open{overflow:hidden}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:var(--font-mono); font-weight:400;
+    font-size:var(--t-body); line-height:1.65;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--accent); color:var(--light)}
+  a{color:inherit; text-decoration:none}
 
-				<!-- Main -->
-					<div id="main">
+  .contour-bg{
+    position:fixed; inset:0; width:100vw; height:100vh;
+    z-index:-1; pointer-events:none; opacity:0.06; color:var(--ink);
+  }
+  .contour-bg path{fill:none; stroke:currentColor; stroke-width:0.6}
 
-						<!-- Intro -->
-							<article id="intro">
-								<h2 class="major">Intro</h2>
-								<span class="image main"><img src="static/images/pic01.jpg" alt="Caglar Togan - Streaming Engineer" /></span>
-								<p>Welcome to my website! I'm <strong>Caglar Togan</strong>, a <strong>Live Streaming & Broadcast Engineer</strong> specializing in cloud-based video delivery, live event monitoring, and streaming infrastructure optimization.</p>
+  .meta{
+    font-family:var(--font-mono); font-size:var(--t-meta);
+    text-transform:uppercase; letter-spacing:0.22em; color:var(--muted);
+    font-weight:400;
+  }
+  .display{font-family:var(--font-display); font-weight:400; letter-spacing:-0.012em; line-height:1.02}
+  .si{font-family:var(--font-mono); font-style:italic; font-weight:300; color:var(--muted)}
+  .accent{color:var(--accent)}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 
-    							<p>With a strong background in <strong>AWS Media Services</strong>, Python automation, and video encoding technologies, I help ensure smooth and high-quality streaming experiences for millions of viewers. From troubleshooting complex live events to optimizing playback performance with <strong>CDN solutions</strong> like Akamai, Fastly, and CloudFront, my goal is to enhance the future of video streaming.</p>
+  /* ---------- NAV ---------- */
+  nav{
+    position:fixed; top:0; left:0; width:100%;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:clamp(1rem,2.4vw,1.7rem) var(--pad);
+    z-index:50; mix-blend-mode:difference; color:#fff;
+  }
+  nav .brand{font-family:var(--font-display); font-size:clamp(1.35rem,2.4vw,1.9rem); letter-spacing:-0.01em}
+  nav .brand em{font-family:var(--font-mono); font-style:italic; font-weight:300; font-size:0.62em; opacity:.8; margin-left:.5em; letter-spacing:0}
+  .index-btn{
+    display:inline-flex; align-items:center; gap:.7rem;
+    border:1px solid rgba(255,255,255,0.5); border-radius:999px;
+    padding:.5rem 1.1rem; background:transparent; color:#fff; cursor:pointer;
+    font-family:var(--font-mono); font-size:var(--t-meta);
+    text-transform:uppercase; letter-spacing:0.22em;
+    transition:padding .4s cubic-bezier(.2,.8,.2,1), border-color .4s;
+  }
+  .index-btn:hover{border-color:#fff; padding-left:1.4rem; padding-right:1.4rem}
+  .index-btn .glyph{position:relative; width:16px; height:10px; display:inline-block}
+  .index-btn .glyph::before,.index-btn .glyph::after{
+    content:""; position:absolute; left:0; width:16px; height:1px; background:#fff;
+    transition:transform .42s cubic-bezier(.2,.8,.2,1), top .42s;
+  }
+  .index-btn .glyph::before{top:1px}
+  .index-btn .glyph::after{top:8px}
+  nav[data-open="true"] .index-btn .glyph::before{top:5px; transform:rotate(45deg)}
+  nav[data-open="true"] .index-btn .glyph::after{top:5px; transform:rotate(-45deg)}
 
-    							<p>Beyond engineering, I’m passionate about the latest advancements in <strong>video compression (H.264, HEVC, AV1)</strong> and adaptive bitrate streaming. Check out my <a href="#work">projects</a> to see how I solve real-world streaming challenges!</p>
-							</article>
+  .site-menu{
+    position:fixed; inset:0; z-index:45; background:var(--bg-dark); color:var(--light);
+    display:flex; flex-direction:column; justify-content:center; gap:.2rem;
+    padding:14vh var(--pad) var(--pad);
+    opacity:0; visibility:hidden; transition:opacity .48s ease;
+  }
+  .site-menu.is-open{opacity:1; visibility:visible}
+  .site-menu a{
+    font-family:var(--font-display); font-size:clamp(2.2rem,7vw,4.6rem); line-height:1.12;
+    display:flex; align-items:baseline; gap:1.2rem; color:var(--dim);
+    opacity:0; transform:translateY(20px);
+    transition:opacity .6s ease, transform .6s cubic-bezier(.2,.8,.2,1), color .35s, padding-left .4s;
+  }
+  .site-menu a span{font-family:var(--font-mono); font-size:.9rem; letter-spacing:.18em; color:var(--muted)}
+  .site-menu.is-open a{opacity:1; transform:none}
+  .site-menu.is-open a:nth-child(1){transition-delay:.06s}
+  .site-menu.is-open a:nth-child(2){transition-delay:.12s}
+  .site-menu.is-open a:nth-child(3){transition-delay:.18s}
+  .site-menu.is-open a:nth-child(4){transition-delay:.24s}
+  .site-menu.is-open a:nth-child(5){transition-delay:.30s}
+  .site-menu.is-open a:nth-child(6){transition-delay:.36s}
+  .site-menu a:hover{color:var(--light); padding-left:1rem}
+  .menu-foot{margin-top:clamp(2rem,5vh,4rem); padding-top:1.4rem; border-top:1px solid var(--rule-light);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem; color:var(--dim)}
 
-						<!-- Work -->
-							<article id="work">
-    							<h2 class="major">Work</h2>
-    							<span class="image main"><img src="static/images/pic02.jpg" alt="Live Streaming and AWS Engineering" /></span>
+  /* ---------- HERO ---------- */
+  .hero{position:relative; width:100%; height:100svh; min-height:560px; overflow:hidden; background:#07070a}
+  .hero canvas{position:absolute; inset:0; width:100%; height:100%; display:block}
+  .hero .frame{position:absolute; inset:0; z-index:3; pointer-events:none;
+    padding:clamp(5.2rem,9vh,7rem) var(--pad) clamp(1.4rem,4vh,2.4rem);
+    display:flex; flex-direction:column; justify-content:space-between; color:var(--light)}
+  .hero .frame .top,.hero .frame .bottom{display:flex; justify-content:space-between; align-items:flex-end; gap:1rem; flex-wrap:wrap}
+  .hero .meta{color:rgba(244,241,234,0.72)}
+  .hero .status{display:inline-flex; align-items:center; gap:.6rem}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 rgba(192,57,43,.7);animation:pulse 2.6s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(192,57,43,.55)}70%{box-shadow:0 0 0 9px rgba(192,57,43,0)}100%{box-shadow:0 0 0 0 rgba(192,57,43,0)}}
+  .hero .tagline{font-family:var(--font-display); font-size:clamp(1.3rem,3.2vw,2.4rem); color:var(--light)}
+  .hero .tagline .slash{color:var(--accent); margin:0 .35em}
+  .hero .hint{font-size:.66rem; letter-spacing:.28em}
+  .hero-fallback{position:absolute; inset:0; z-index:2; display:none; align-items:center; justify-content:center; text-align:center; padding:2rem; color:var(--light)}
+  .hero-fallback .display{font-size:clamp(3rem,11vw,8rem)}
+  body.no-webgl .hero canvas{display:none}
+  body.no-webgl .hero-fallback{display:flex}
 
-    							<p>I specialize in <strong>live streaming, video encoding, and cloud-based media workflows</strong>, ensuring seamless content delivery for large-scale broadcast operations. My expertise lies in managing live event streaming, troubleshooting complex video pipeline issues, and optimizing playback performance for global audiences.</p>
+  /* ---------- MARQUEE ---------- */
+  .marquee{border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); overflow:hidden; background:var(--bg-soft)}
+  .marquee .track{display:flex; width:max-content; gap:0; animation:scroll 38s linear infinite}
+  .marquee .track > span{display:inline-flex; align-items:center; padding:.85rem 0; white-space:nowrap}
+  .marquee .item{font-size:var(--t-meta); text-transform:uppercase; letter-spacing:.22em; color:var(--ink-soft); padding:0 1.4rem}
+  .marquee .bullet{width:5px;height:5px;border-radius:50%;background:var(--accent);display:inline-block}
+  @keyframes scroll{to{transform:translateX(-50%)}}
 
-    							<p>Currently, I oversee **24 CBS local stations** for AWS cloud streaming, leveraging <strong>AWS Media Services (MediaLive, MediaPackage, MediaConnect, MediaStore)</strong> to deliver high-quality, low-latency streaming experiences. My work involves integrating <strong>HLS, DASH, SCTE-35 ad insertion, and CDN acceleration (Akamai, Fastly, CloudFront)</strong> to provide a reliable and scalable streaming infrastructure.</p>
+  /* ---------- INDEX STRIP ---------- */
+  .index-strip{display:flex; align-items:center; gap:1rem; flex-wrap:wrap;
+    padding:1rem var(--pad); border-bottom:1px solid var(--rule); color:var(--muted)}
+  .index-strip .hr{flex:0 0 28px; height:1px; background:var(--rule-strong)}
 
-   								 <p>Beyond live event operations, I also develop **automation tools using Python and Bash** to enhance monitoring, logging, and alerting systems. From encoding optimization (H.264, HEVC, AV1) to real-time issue resolution, my focus is on delivering top-tier streaming solutions.</p>
+  /* ---------- SECTION SCAFFOLD ---------- */
+  section{padding:clamp(3.6rem,8vw,8rem) var(--pad)}
+  .sec-head{display:flex; justify-content:space-between; align-items:baseline; gap:1rem;
+    padding-bottom:1.3rem; margin-bottom:clamp(2.2rem,5vw,4rem); border-bottom:1px solid var(--rule)}
+  .sec-head .label{display:flex; align-items:baseline; gap:.9rem}
+  .sec-head .folio{font-size:var(--t-meta); letter-spacing:.18em; color:var(--dim)}
+  .sec-title{font-family:var(--font-display); font-size:var(--t-display-md)}
 
-    							<p>Explore my <a href="https://github.com/CaglarCode" target="_blank">latest projects</a> to see how I build and optimize cloud-based video workflows!</p>
-							</article>
+  [data-reveal]{opacity:0; transform:translateY(28px); transition:opacity 1s ease, transform 1s cubic-bezier(.2,.8,.2,1)}
+  [data-reveal].is-visible{opacity:1; transform:none}
 
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid; grid-template-columns:1.2fr 1fr; gap:clamp(2rem,5vw,5rem); align-items:start}
+  .about-lead{font-family:var(--font-display); font-size:var(--t-display-sm); line-height:1.16; color:var(--ink)}
+  .about-lead .line2{display:block}
+  .about-body p{color:var(--ink-soft); margin-bottom:1.2rem; max-width:46ch}
+  .about-body p:first-child{position:relative}
+  .dropcap::first-letter{font-family:var(--font-display); float:left; font-size:3.6em; line-height:.78; padding:.06em .12em 0 0; color:var(--accent)}
+  dl.meta-list{margin-top:2rem; border-top:1px solid var(--rule)}
+  dl.meta-list .row{display:flex; justify-content:space-between; gap:1rem; padding:.85rem 0; border-bottom:1px solid var(--rule)}
+  dl.meta-list dt{font-size:var(--t-meta); text-transform:uppercase; letter-spacing:.2em; color:var(--muted)}
+  dl.meta-list dd{font-size:.92rem; color:var(--ink); text-align:right}
+  dl.meta-list dd .status{display:inline-flex;align-items:center;gap:.5rem}
 
-						<!-- About -->
-							<article id="about">
-    							<h2 class="major">About Me</h2>
-    							<span class="image main"><img src="static/images/pic03.jpg" alt="About Caglar Togan" /></span>
+  /* ---------- EXPERIENCE ---------- */
+  .work{display:grid; grid-template-columns:1.05fr 0.95fr; gap:clamp(1.6rem,4vw,4rem); align-items:center;
+    padding:clamp(2rem,4vw,3.4rem) 0; border-top:1px solid var(--rule)}
+  .work:last-of-type{border-bottom:1px solid var(--rule)}
+  .work .visual{position:relative; aspect-ratio:4/3; border-radius:2px; overflow:hidden;
+    background:linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 100%); display:flex; align-items:center; justify-content:center}
+  .work .visual svg{position:absolute; inset:0; width:100%; height:100%; opacity:.5}
+  .work .visual svg *{stroke:#fff; fill:none; stroke-width:.6; opacity:.5}
+  .work .visual .vtitle{position:relative; z-index:2; font-family:var(--font-display); color:var(--light);
+    font-size:clamp(1.5rem,3.4vw,2.6rem); text-align:center; padding:0 1rem; line-height:1.05; text-shadow:0 2px 30px rgba(0,0,0,.5)}
+  .work .visual .badge{position:absolute; top:1rem; left:1rem; z-index:2; font-family:var(--font-mono);
+    font-size:.62rem; letter-spacing:.2em; color:rgba(255,255,255,.7); text-transform:uppercase}
+  .work .visual::after{content:""; position:absolute; left:0; right:0; bottom:0; height:55%; z-index:1;
+    background:radial-gradient(120% 90% at 50% 130%, rgba(255,255,255,.14), transparent 60%)}
+  .work .info .row{display:flex; justify-content:space-between; gap:1rem; font-size:var(--t-meta);
+    text-transform:uppercase; letter-spacing:.2em; color:var(--muted); margin-bottom:1rem}
+  .work .info h3{font-family:var(--font-display); font-size:var(--t-display-sm); margin-bottom:.2rem; line-height:1.05}
+  .work .info .org{font-size:.92rem; color:var(--accent); margin-bottom:1rem}
+  .work .info p{color:var(--ink-soft); max-width:42ch; margin-bottom:1.2rem}
+  .tags{display:flex; flex-wrap:wrap; gap:.5rem}
+  .tags span{font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted);
+    border:1px solid var(--rule); border-radius:999px; padding:.32rem .8rem}
+  .work:nth-child(even) .visual{order:2}
+  .work:nth-child(even) .info{order:1}
 
-    							<p>Passionate about technology and always eager to solve complex challenges, I specialize in live streaming infrastructure, cloud-based video workflows, and automation. With experience managing high-traffic streaming platforms and real-time monitoring solutions, I strive to create seamless viewing experiences for millions of users.</p>
+  /* ---------- CAPABILITIES ---------- */
+  .cap-grid{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule)}
+  .cap{background:var(--bg); padding:clamp(1.6rem,3vw,2.6rem); transition:background .4s}
+  .cap:hover{background:var(--bg-soft)}
+  .cap .ix{font-size:.66rem; letter-spacing:.2em; color:var(--dim); margin-bottom:1.2rem}
+  .cap h3{font-family:var(--font-display); font-size:var(--t-display-sm); margin-bottom:.7rem; line-height:1.06}
+  .cap p{color:var(--ink-soft); margin-bottom:1.3rem; max-width:40ch}
+  .cap .foot{padding-top:1rem; border-top:1px solid var(--rule); font-size:.7rem; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--muted)}
+  .toolkit{margin-top:clamp(2rem,4vw,3rem); display:flex; flex-wrap:wrap; align-items:center; gap:.6rem}
+  .toolkit .lab{font-size:var(--t-meta); text-transform:uppercase; letter-spacing:.22em; color:var(--muted); margin-right:.6rem}
 
-    							<p>Beyond my professional expertise, I have a deep love for sports and strategy games. I enjoy playing tennis and ping pong, always looking to refine my technique and improve my reflexes. Chess keeps me sharp, helping me develop strategic thinking, while boxing pushes my physical and mental limits, teaching discipline and resilience.</p>
+  /* ---------- EDUCATION ---------- */
+  .edu .ln{display:grid; grid-template-columns:auto 1fr auto; gap:1.4rem; align-items:baseline;
+    padding:1.6rem 0; border-top:1px solid var(--rule)}
+  .edu .ln:last-child{border-bottom:1px solid var(--rule)}
+  .edu .ln .no{font-family:var(--font-display); font-size:clamp(1.8rem,3.4vw,2.6rem); color:var(--dim)}
+  .edu .ln h3{font-family:var(--font-display); font-size:var(--t-display-sm); line-height:1.05}
+  .edu .ln .deg{font-size:.92rem; color:var(--ink-soft); margin-top:.2rem}
+  .edu .ln .yr{font-size:var(--t-meta); letter-spacing:.18em; color:var(--muted); white-space:nowrap}
 
-    							<p>Whether it’s solving a technical problem, competing in a fast-paced game, or analyzing the next best move, I believe in continuous improvement and embracing challenges </p>
-							</article>
+  /* ---------- CONTACT (dark) ---------- */
+  .contact{background:var(--bg-dark); color:var(--light)}
+  .contact .sec-head{border-color:var(--rule-light)}
+  .contact .folio,.contact .label .meta{color:var(--dim)}
+  .contact .sec-title{color:var(--light)}
+  .contact h2.big{font-family:var(--font-display); font-size:var(--t-display-lg); line-height:1.04; max-width:16ch; margin:clamp(1.5rem,4vw,3rem) 0}
+  .contact h2.big .si{color:var(--dim); display:block; font-size:.62em; margin-top:.2em}
+  .contact p.lede{color:var(--dim); max-width:48ch; margin-bottom:2.2rem}
+  .cta-btn{display:inline-flex; align-items:center; gap:1rem; border:1px solid var(--rule-light); border-radius:999px;
+    padding:.9rem 1.5rem; font-family:var(--font-mono); font-size:.78rem; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--light); transition:background .4s, color .4s, border-color .4s}
+  .cta-btn .o{width:26px;height:26px;border:1px solid currentColor;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+  .cta-btn:hover{background:var(--accent); border-color:var(--accent); color:#fff}
+  .cta-btn:hover .o{transform:translateX(4px)}
+  .contact .info-row{display:flex; flex-wrap:wrap; gap:0; margin-top:clamp(2.4rem,5vw,4rem); border-top:1px solid var(--rule-light)}
+  .contact .info-row .cell{flex:1 1 200px; padding:1.4rem 0; padding-right:1.4rem; border-bottom:1px solid var(--rule-light)}
+  .contact .info-row .cell .k{font-size:var(--t-meta); text-transform:uppercase; letter-spacing:.22em; color:var(--dim); margin-bottom:.5rem}
+  .contact .info-row .cell .v{font-size:.95rem; color:var(--light); word-break:break-word}
+  .contact .info-row .cell .v a{border-bottom:1px solid var(--rule-light); transition:border-color .3s}
+  .contact .info-row .cell .v a:hover{border-color:var(--accent)}
+  .contact .note{margin-top:1.4rem; color:var(--muted); font-size:.78rem; letter-spacing:.04em}
 
+  /* ---------- FOOTER (dark) ---------- */
+  footer{background:var(--bg-dark); color:var(--light); padding:clamp(3rem,6vw,5rem) var(--pad) 0; border-top:1px solid var(--rule-light)}
+  .foot-top{display:flex; justify-content:space-between; align-items:flex-end; gap:2rem; flex-wrap:wrap; padding-bottom:clamp(2rem,5vw,4rem)}
+  .foot-top .mark{font-family:var(--font-display); font-size:clamp(2rem,5vw,3.6rem); line-height:1}
+  .foot-top .si{color:var(--dim); font-size:clamp(.9rem,1.6vw,1.2rem)}
+  .foot-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1.4rem; padding:clamp(1.6rem,3vw,2.4rem) 0; border-top:1px solid var(--rule-light)}
+  .foot-grid .col .h{font-size:var(--t-meta); text-transform:uppercase; letter-spacing:.22em; color:var(--dim); margin-bottom:1rem}
+  .foot-grid .col a,.foot-grid .col .x{display:block; font-size:.85rem; color:var(--light); padding:.4rem 0; border-bottom:1px solid var(--rule-light); transition:color .3s, padding-left .3s}
+  .foot-grid .col a:hover{color:var(--accent); padding-left:.4rem}
+  .foot-lockup{font-family:var(--font-display); font-size:clamp(4rem,22vw,18rem); line-height:.82; letter-spacing:-0.02em;
+    color:var(--light); padding:.1em 0 .12em; overflow:hidden; white-space:nowrap}
+  .foot-base{display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem; padding:1.4rem 0 2rem; border-top:1px solid var(--rule-light); color:var(--dim); font-size:.7rem; letter-spacing:.12em; text-transform:uppercase}
 
-						<!-- Contact -->
-							<article id="contact">
-    							<h2 class="major">Get in Touch</h2>
-    
-    							<p>Feel free to reach out for collaborations, tech discussions, or just to say hi! I’ll get back to you as soon as possible.</p>
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:960px){
+    .about-grid{grid-template-columns:1fr}
+    .work{grid-template-columns:1fr}
+    .work .visual{order:0 !important}
+    .work .info{order:0 !important}
+    .cap-grid{grid-template-columns:1fr}
+    .foot-grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (max-width:560px){
+    .foot-grid{grid-template-columns:1fr}
+    .edu .ln{grid-template-columns:1fr; gap:.4rem}
+    .edu .ln .no{display:none}
+    .hero .frame .top,.hero .frame .bottom{align-items:flex-start; flex-direction:column}
+    .foot-lockup{font-size:26vw}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important; transition:none !important; scroll-behavior:auto !important}
+    [data-reveal]{opacity:1 !important; transform:none !important}
+  }
+</style>
+</head>
+<body>
 
-    							<form method="post" action="#">
-        							<div class="fields">
-           								<div class="field half">
-                							<label for="name">Name</label>
-                							<input type="text" name="name" id="name" placeholder="Your Full Name" required />
-            							</div>
-            						<div class="field half">
-                							<label for="email">Email</label>
-                							<input type="email" name="email" id="email" placeholder="your@email.com" required />
-            						</div>
-            						<div class="field">
-                						<label for="message">Message</label>
-                						<textarea name="message" id="message" rows="4" placeholder="Write your message here..." required></textarea>
-            						</div>
-        						</div>
-       							<ul class="actions">
-            						<li><input type="submit" value="Send Message" class="primary" /></li>
-           							<li><input type="reset" value="Reset" /></li>
-        						</ul>
-    							</form>
+<svg class="contour-bg" id="contour" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true"></svg>
 
-    							<h3>Let's Connect</h3>
-    							<ul class="icons">
-        							<li><a href="mailto:ctogansf@gmail.com" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
-        							<li><a href="https://github.com/CaglarCode" target="_blank" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-        							<li><a href="https://www.linkedin.com/in/caglar-togan-855aa6239" target="_blank" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
-    							</ul>
-							</article>
+<nav id="nav">
+  <a href="#top" class="brand">Caglar Togan<em>broadcast</em></a>
+  <button class="index-btn" id="menuBtn" aria-expanded="false" aria-controls="siteMenu">
+    <span>Index</span><span class="glyph" aria-hidden="true"></span>
+  </button>
+</nav>
 
+<div class="site-menu" id="siteMenu" aria-hidden="true">
+  <a href="#about"><span>01</span>Profile</a>
+  <a href="#work"><span>02</span>Experience</a>
+  <a href="#caps"><span>03</span>Capabilities</a>
+  <a href="#edu"><span>04</span>Education</a>
+  <a href="#contact"><span>05</span>Commission</a>
+  <a href="https://www.linkedin.com/in/caglar-togan-855aa6239/" target="_blank" rel="noopener"><span>↗</span>LinkedIn</a>
+  <div class="menu-foot meta">
+    <span>Seattle, WA · UTC−8</span>
+    <span>Edition 001 · 2025 / 2026</span>
+  </div>
+</div>
 
-						<!-- Elements -->
-							<article id="elements">
-								<h2 class="major">Elements</h2>
+<header class="hero" id="top">
+  <canvas id="heroCanvas"></canvas>
+  <div class="hero-fallback">
+    <div>
+      <p class="meta" style="margin-bottom:1rem">Live Streaming &amp; Broadcast Engineer</p>
+      <div class="display">Caglar Togan</div>
+    </div>
+  </div>
+  <h1 class="sr-only">Caglar Togan — Live Streaming and Broadcast Engineer</h1>
+  <div class="frame">
+    <div class="top">
+      <span class="meta status"><span class="dot"></span>Available · Accepting work</span>
+      <span class="meta">Live Streaming &amp; Broadcast Engineer</span>
+    </div>
+    <div class="bottom">
+      <div class="tagline">Signal in<span class="slash">/</span>Stream out</div>
+      <span class="meta hint">Move to decode the signal ↓</span>
+    </div>
+  </div>
+</header>
 
-								<section>
-									<h3 class="major">Text</h3>
-									<p>This is <b>bold</b> and this is <strong>strong</strong>. This is <i>italic</i> and this is <em>emphasized</em>.
-									This is <sup>superscript</sup> text and this is <sub>subscript</sub> text.
-									This is <u>underlined</u> and this is code: <code>for (;;) { ... }</code>. Finally, <a href="#">this is a link</a>.</p>
-									<hr />
-									<h2>Heading Level 2</h2>
-									<h3>Heading Level 3</h3>
-									<h4>Heading Level 4</h4>
-									<h5>Heading Level 5</h5>
-									<h6>Heading Level 6</h6>
-									<hr />
-									<h4>Blockquote</h4>
-									<blockquote>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan faucibus. Vestibulum ante ipsum primis in faucibus lorem ipsum dolor sit amet nullam adipiscing eu felis.</blockquote>
-									<h4>Preformatted</h4>
-									<pre><code>i = 0;
+<main class="main">
 
-while (!deck.isInOrder()) {
-    print 'Iteration ' + i;
-    deck.shuffle();
-    i++;
-}
+  <div class="marquee" aria-hidden="true">
+    <div class="track" id="marquee"></div>
+  </div>
 
-print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
-								</section>
+  <div class="index-strip meta">
+    <span>N — 01</span><span class="hr"></span>
+    <span>Portfolio 2025 / 2026</span><span class="hr"></span>
+    <span>Edition 001</span><span class="hr"></span>
+    <span>Seattle, WA</span><span class="hr"></span>
+    <span>In rotation</span>
+  </div>
 
-								<section>
-									<h3 class="major">Lists</h3>
+  <!-- 01 ABOUT -->
+  <section id="about" data-reveal>
+    <div class="sec-head">
+      <div class="label"><span class="meta">01</span><h2 class="sec-title">Profile</h2></div>
+      <span class="folio">p. 001</span>
+    </div>
+    <div class="about-grid">
+      <p class="about-lead display">
+        I keep live video<br>
+        <span class="si line2">moving cleanly at scale</span><br>
+        from encoder to screen.
+      </p>
+      <div class="about-body">
+        <p class="dropcap">Experienced Live Streaming &amp; Broadcast Engineer specializing in high-profile events, with deep work across AWS, Python, and modern video encoding standards — AVC, H.264, HEVC and AV1. The job is making sure the picture arrives intact, on time, and at quality, no matter how many people are watching.</p>
+        <p>Today I help run AWS cloud streaming for 24 CBS local stations at Paramount+, building the diagnostics, monitoring and ad-insertion plumbing that keeps broadcast-grade delivery dependable — and stepping in fast when a live event can't wait.</p>
+        <dl class="meta-list">
+          <div class="row"><dt>Class</dt><dd>Broadcast / Streaming Infra</dd></div>
+          <div class="row"><dt>Origin</dt><dd>Seattle, WA · US</dd></div>
+          <div class="row"><dt>Focus</dt><dd>Live video at scale</dd></div>
+          <div class="row"><dt>Status</dt><dd><span class="status"><span class="dot"></span>Open to work</span></dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
 
-									<h4>Unordered</h4>
-									<ul>
-										<li>Dolor pulvinar etiam.</li>
-										<li>Sagittis adipiscing.</li>
-										<li>Felis enim feugiat.</li>
-									</ul>
+  <!-- 02 EXPERIENCE -->
+  <section id="work">
+    <div class="sec-head" data-reveal>
+      <div class="label"><span class="meta">02</span><h2 class="sec-title">Experience</h2></div>
+      <span class="folio">p. 002</span>
+    </div>
 
-									<h4>Alternate</h4>
-									<ul class="alt">
-										<li>Dolor pulvinar etiam.</li>
-										<li>Sagittis adipiscing.</li>
-										<li>Felis enim feugiat.</li>
-									</ul>
+    <article class="work" data-reveal>
+      <div class="visual">
+        <span class="badge">P+ / Infra</span>
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><ellipse cx="200" cy="150" rx="60" ry="60"/><ellipse cx="200" cy="150" rx="110" ry="110"/><ellipse cx="200" cy="150" rx="160" ry="160"/><ellipse cx="200" cy="150" rx="210" ry="210"/></svg>
+        <div class="vtitle">Paramount+</div>
+      </div>
+      <div class="info">
+        <div class="row"><span>(01 / 03)</span><span>2023 — Present</span></div>
+        <h3>Infrastructure Engineer</h3>
+        <div class="org">Paramount+ · Seattle, WA</div>
+        <p>Oversee AWS cloud streaming for 24 CBS local stations — guaranteeing broadcast-quality delivery and a flawless viewing experience. Author Python and Bash diagnostics for frame rate, color, audio, frozen frames, resolution and network issues; manage HLS media playlists, SCTE-35 / Google DAI ad insertion, Elemental encoders, and QoE probes.</p>
+        <div class="tags">
+          <span>AWS</span><span>SCTE-35</span><span>Google DAI</span><span>HLS</span><span>Elemental</span><span>Grafana</span><span>Python / Bash</span>
+        </div>
+      </div>
+    </article>
 
-									<h4>Ordered</h4>
-									<ol>
-										<li>Dolor pulvinar etiam.</li>
-										<li>Etiam vel felis viverra.</li>
-										<li>Felis enim feugiat.</li>
-										<li>Dolor pulvinar etiam.</li>
-										<li>Etiam vel felis lorem.</li>
-										<li>Felis enim et feugiat.</li>
-									</ol>
-									<h4>Icons</h4>
-									<ul class="icons">
-										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-										<li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
-									</ul>
+    <article class="work" data-reveal>
+      <div class="visual">
+        <span class="badge">PV / Support</span>
+        <svg viewBox="0 0 400 300" preserveAspectRatio="none"><path d="M0,150 C66,90 133,210 200,150 266,90 333,210 400,150"/><path d="M0,180 C66,120 133,240 200,180 266,120 333,240 400,180"/><path d="M0,120 C66,60 133,180 200,120 266,60 333,180 400,120"/><path d="M0,210 C66,150 133,270 200,210 266,150 333,270 400,210"/></svg>
+        <div class="vtitle">Prime Video</div>
+      </div>
+      <div class="info">
+        <div class="row"><span>(02 / 03)</span><span>2022 — 2023</span></div>
+        <h3>Support Engineer</h3>
+        <div class="org">Amazon Prime Video · Seattle, WA</div>
+        <p>Owned incident resolution and operational monitoring for live and on-demand video across HLS, DASH, MSS and SRT. Built "eyes-on-glass" dashboards to protect QoS / QoE, supported live sports production workflows, and delivered reliable support through million-view live events — translating metrics into clear signal for stakeholders.</p>
+        <div class="tags">
+          <span>HLS / DASH</span><span>SRT / MSS</span><span>QoS / QoE</span><span>Live Sports</span><span>Monitoring</span><span>Incident Response</span>
+        </div>
+      </div>
+    </article>
 
-									<h4>Actions</h4>
-									<ul class="actions">
-										<li><a href="#" class="button primary">Default</a></li>
-										<li><a href="#" class="button">Default</a></li>
-									</ul>
-									<ul class="actions stacked">
-										<li><a href="#" class="button primary">Default</a></li>
-										<li><a href="#" class="button">Default</a></li>
-									</ul>
-								</section>
+    <article class="work" data-reveal>
+      <div class="visual">
+        <span class="badge">ECG / Encode</span>
+        <svg viewBox="0 0 400 300" preserveAspectRatio="none"><path d="M0,50 H400 M0,100 H400 M0,150 H400 M0,200 H400 M0,250 H400"/><path d="M50,0 V300 M150,0 V300 M250,0 V300 M350,0 V300"/><ellipse cx="200" cy="150" rx="70" ry="70"/></svg>
+        <div class="vtitle">Encoding</div>
+      </div>
+      <div class="info">
+        <div class="row"><span>(03 / 03)</span><span>2021 — 2022</span></div>
+        <h3>Video Encoding Engineer</h3>
+        <div class="org">Event Compression Group · Burlingame, CA</div>
+        <p>Led design and execution of enterprise-grade live and pre-recorded event streaming — full ownership from inception to broadcast. Configured hardware and software encoders for optimal performance, orchestrated network and CDN delivery worldwide, and helped ship a Tier 1 product release event showcasing the streaming infrastructure.</p>
+        <div class="tags">
+          <span>Encoders</span><span>CDN</span><span>Live Events</span><span>Premiere</span><span>Final Cut Pro</span><span>Photoshop</span>
+        </div>
+      </div>
+    </article>
+  </section>
 
-								<section>
-									<h3 class="major">Table</h3>
-									<h4>Default</h4>
-									<div class="table-wrapper">
-										<table>
-											<thead>
-												<tr>
-													<th>Name</th>
-													<th>Description</th>
-													<th>Price</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>Item One</td>
-													<td>Ante turpis integer aliquet porttitor.</td>
-													<td>29.99</td>
-												</tr>
-												<tr>
-													<td>Item Two</td>
-													<td>Vis ac commodo adipiscing arcu aliquet.</td>
-													<td>19.99</td>
-												</tr>
-												<tr>
-													<td>Item Three</td>
-													<td> Morbi faucibus arcu accumsan lorem.</td>
-													<td>29.99</td>
-												</tr>
-												<tr>
-													<td>Item Four</td>
-													<td>Vitae integer tempus condimentum.</td>
-													<td>19.99</td>
-												</tr>
-												<tr>
-													<td>Item Five</td>
-													<td>Ante turpis integer aliquet porttitor.</td>
-													<td>29.99</td>
-												</tr>
-											</tbody>
-											<tfoot>
-												<tr>
-													<td colspan="2"></td>
-													<td>100.00</td>
-												</tr>
-											</tfoot>
-										</table>
-									</div>
+  <!-- 03 CAPABILITIES -->
+  <section id="caps">
+    <div class="sec-head" data-reveal>
+      <div class="label"><span class="meta">03</span><h2 class="sec-title">Capabilities</h2></div>
+      <span class="folio">p. 003</span>
+    </div>
+    <div class="cap-grid" data-reveal>
+      <div class="cap">
+        <div class="ix meta">↳ 01</div>
+        <h3>Cloud Infrastructure</h3>
+        <p>Architect and optimize AWS for resilient cloud streaming — building and maintaining Amazon Machine Images, scaling delivery, and keeping broadcast-grade pipelines healthy.</p>
+        <div class="foot">AWS · AMI · Architecture · Linux</div>
+      </div>
+      <div class="cap">
+        <div class="ix meta">↳ 02</div>
+        <h3>Streaming &amp; Delivery</h3>
+        <p>End-to-end packaging and distribution across adaptive formats and global CDNs, tuned for low latency and consistent quality of experience.</p>
+        <div class="foot">HLS · DASH · MSS · SRT · CDN</div>
+      </div>
+      <div class="cap">
+        <div class="ix meta">↳ 03</div>
+        <h3>Encoding &amp; Compression</h3>
+        <p>Transcoding and encoder operations across modern codecs, with hands-on maintenance of Elemental encoders down to software and BIOS.</p>
+        <div class="foot">H.264 · HEVC · AV1 · AVC · Transcode</div>
+      </div>
+      <div class="cap">
+        <div class="ix meta">↳ 04</div>
+        <h3>Monetization &amp; Monitoring</h3>
+        <p>Dynamic ad insertion and revenue plumbing wired to real-time observability, so the picture and the business both stay in the green.</p>
+        <div class="foot">SCTE-35 · Google DAI · GAM · Mux · Grafana</div>
+      </div>
+    </div>
+    <div class="toolkit" data-reveal>
+      <span class="lab">Toolkit</span>
+      <span class="tags" style="display:inline-flex"><span>Python</span><span>Bash</span><span>grep / awk / sed</span><span>Akamai</span><span>Fastly</span><span>CloudFront</span><span>Adobe Premiere</span><span>Final Cut Pro</span></span>
+    </div>
+  </section>
 
-									<h4>Alternate</h4>
-									<div class="table-wrapper">
-										<table class="alt">
-											<thead>
-												<tr>
-													<th>Name</th>
-													<th>Description</th>
-													<th>Price</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>Item One</td>
-													<td>Ante turpis integer aliquet porttitor.</td>
-													<td>29.99</td>
-												</tr>
-												<tr>
-													<td>Item Two</td>
-													<td>Vis ac commodo adipiscing arcu aliquet.</td>
-													<td>19.99</td>
-												</tr>
-												<tr>
-													<td>Item Three</td>
-													<td> Morbi faucibus arcu accumsan lorem.</td>
-													<td>29.99</td>
-												</tr>
-												<tr>
-													<td>Item Four</td>
-													<td>Vitae integer tempus condimentum.</td>
-													<td>19.99</td>
-												</tr>
-												<tr>
-													<td>Item Five</td>
-													<td>Ante turpis integer aliquet porttitor.</td>
-													<td>29.99</td>
-												</tr>
-											</tbody>
-											<tfoot>
-												<tr>
-													<td colspan="2"></td>
-													<td>100.00</td>
-												</tr>
-											</tfoot>
-										</table>
-									</div>
-								</section>
+  <!-- 04 EDUCATION -->
+  <section id="edu">
+    <div class="sec-head" data-reveal>
+      <div class="label"><span class="meta">04</span><h2 class="sec-title">Education</h2></div>
+      <span class="folio">p. 004</span>
+    </div>
+    <div class="edu" data-reveal>
+      <div class="ln">
+        <div class="no">01</div>
+        <div>
+          <h3>Illinois Institute of Technology</h3>
+          <div class="deg">Master of Information Technology</div>
+        </div>
+        <div class="yr">2024 — 2026</div>
+      </div>
+      <div class="ln">
+        <div class="no">02</div>
+        <div>
+          <h3>TOBB University of Economics &amp; Technology</h3>
+          <div class="deg">Bachelor of Arts</div>
+        </div>
+        <div class="yr">2008 — 2013</div>
+      </div>
+    </div>
+  </section>
 
-								<section>
-									<h3 class="major">Buttons</h3>
-									<ul class="actions">
-										<li><a href="#" class="button primary">Primary</a></li>
-										<li><a href="#" class="button">Default</a></li>
-									</ul>
-									<ul class="actions">
-										<li><a href="#" class="button">Default</a></li>
-										<li><a href="#" class="button small">Small</a></li>
-									</ul>
-									<ul class="actions">
-										<li><a href="#" class="button primary icon solid fa-download">Icon</a></li>
-										<li><a href="#" class="button icon solid fa-download">Icon</a></li>
-									</ul>
-									<ul class="actions">
-										<li><span class="button primary disabled">Disabled</span></li>
-										<li><span class="button disabled">Disabled</span></li>
-									</ul>
-								</section>
+  <!-- 05 CONTACT -->
+  <section id="contact" class="contact" data-reveal>
+    <div class="sec-head">
+      <div class="label"><span class="meta">05</span><h2 class="sec-title">Commission</h2></div>
+      <span class="folio">p. 005</span>
+    </div>
+    <h2 class="big">Let's put the next one<span class="si">on air.</span></h2>
+    <p class="lede">Available for live streaming, broadcast infrastructure and video encoding work — high-profile events welcome. The fastest way to reach me is email.</p>
+    <a class="cta-btn" href="mailto:ctogansf@gmail.com">Start a conversation <span class="o" aria-hidden="true">→</span></a>
+    <div class="info-row">
+      <div class="cell"><div class="k">Email</div><div class="v"><a href="mailto:ctogansf@gmail.com">ctogansf@gmail.com</a></div></div>
+      <div class="cell"><div class="k">LinkedIn</div><div class="v"><a href="https://www.linkedin.com/in/caglar-togan-855aa6239/" target="_blank" rel="noopener">in/caglar-togan</a></div></div>
+      <div class="cell"><div class="k">Location</div><div class="v">Seattle, WA · United States</div></div>
+    </div>
+    <p class="note">Online · Accepting commissions — references available on request.</p>
+  </section>
 
-								<section>
-									<h3 class="major">Form</h3>
-									<form method="post" action="#">
-										<div class="fields">
-											<div class="field half">
-												<label for="demo-name">Name</label>
-												<input type="text" name="demo-name" id="demo-name" value="" placeholder="Jane Doe" />
-											</div>
-											<div class="field half">
-												<label for="demo-email">Email</label>
-												<input type="email" name="demo-email" id="demo-email" value="" placeholder="jane@untitled.tld" />
-											</div>
-											<div class="field">
-												<label for="demo-category">Category</label>
-												<select name="demo-category" id="demo-category">
-													<option value="">-</option>
-													<option value="1">Manufacturing</option>
-													<option value="1">Shipping</option>
-													<option value="1">Administration</option>
-													<option value="1">Human Resources</option>
-												</select>
-											</div>
-											<div class="field half">
-												<input type="radio" id="demo-priority-low" name="demo-priority" checked>
-												<label for="demo-priority-low">Low</label>
-											</div>
-											<div class="field half">
-												<input type="radio" id="demo-priority-high" name="demo-priority">
-												<label for="demo-priority-high">High</label>
-											</div>
-											<div class="field half">
-												<input type="checkbox" id="demo-copy" name="demo-copy">
-												<label for="demo-copy">Email me a copy</label>
-											</div>
-											<div class="field half">
-												<input type="checkbox" id="demo-human" name="demo-human" checked>
-												<label for="demo-human">Not a robot</label>
-											</div>
-											<div class="field">
-												<label for="demo-message">Message</label>
-												<textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
-											</div>
-										</div>
-										<ul class="actions">
-											<li><input type="submit" value="Send Message" class="primary" /></li>
-											<li><input type="reset" value="Reset" /></li>
-										</ul>
-									</form>
-								</section>
+</main>
 
-							</article>
+<footer>
+  <div class="foot-top">
+    <div class="mark display">Caglar Togan</div>
+    <div class="si">Signal in / Stream out</div>
+  </div>
+  <div class="foot-grid">
+    <div class="col"><div class="h">Index</div>
+      <a href="#about">Profile</a><a href="#work">Experience</a><a href="#caps">Capabilities</a><a href="#edu">Education</a>
+    </div>
+    <div class="col"><div class="h">Channels</div>
+      <a href="https://www.linkedin.com/in/caglar-togan-855aa6239/" target="_blank" rel="noopener">LinkedIn ↗</a><a href="mailto:ctogansf@gmail.com">Email ↗</a>
+    </div>
+    <div class="col"><div class="h">Contact</div>
+      <a href="mailto:ctogansf@gmail.com">ctogansf@gmail.com</a><span class="x">Seattle, WA</span>
+    </div>
+    <div class="col"><div class="h">Index No.</div>
+      <span class="x">Edition 001</span><span class="x">2025 / 2026</span><span class="x">In rotation</span>
+    </div>
+  </div>
+  <div class="foot-lockup" aria-hidden="true">TOGAN</div>
+  <div class="foot-base">
+    <span>© 2026 Caglar Togan</span>
+    <span>Built as an editorial broadcast portfolio</span>
+  </div>
+</footer>
 
-					</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* =========================================================================
+   MENU + SCROLL REVEAL + MARQUEE + CONTOUR
+   ========================================================================= */
+(function(){
+  // ---- Marquee ----
+  var items = ['Caglar Togan','Live Streaming & Broadcast Engineer','Portfolio 2025 / 2026','Signal in — Stream out','Seattle, WA','Available for commission','AWS · HLS · SCTE-35 · AV1'];
+  var track = document.getElementById('marquee');
+  function buildMarquee(){
+    var html = '';
+    for(var pass=0; pass<2; pass++){
+      html += '<span>';
+      for(var i=0;i<items.length;i++){
+        html += '<span class="item">'+items[i]+'</span><span class="bullet"></span>';
+      }
+      html += '</span>';
+    }
+    track.innerHTML = html;
+  }
+  buildMarquee();
 
-				<!-- Footer -->
-					<footer id="footer">
-						<p class="copyright">&copy; 2025 Caglar Togan. All Rights Reserved.</p>
+  // ---- Contour background ----
+  var svg = document.getElementById('contour');
+  var W=1000,H=600,paths='';
+  for(var n=0;n<15;n++){
+    var base = (n+1)*(H/16);
+    var amp = 12 + (n%5)*6;
+    var f1 = 0.012 + (n%4)*0.004;
+    var f2 = 0.03 + (n%3)*0.006;
+    var ph = n*0.7;
+    var d = 'M0,'+base.toFixed(1);
+    for(var x=0;x<=W;x+=20){
+      var y = base + amp*Math.sin(x*f1+ph) + (amp*0.4)*Math.sin(x*f2+ph*1.7);
+      d += ' L'+x+','+y.toFixed(1);
+    }
+    paths += '<path d="'+d+'"/>';
+  }
+  svg.innerHTML = paths;
 
-					</footer>
+  // ---- Menu ----
+  var nav = document.getElementById('nav');
+  var btn = document.getElementById('menuBtn');
+  var menu = document.getElementById('siteMenu');
+  var hideTimer = null;
+  function openMenu(){
+    clearTimeout(hideTimer);
+    menu.classList.add('is-open'); menu.setAttribute('aria-hidden','false');
+    btn.setAttribute('aria-expanded','true'); nav.setAttribute('data-open','true');
+    document.documentElement.classList.add('menu-open');
+  }
+  function closeMenu(){
+    menu.classList.remove('is-open'); btn.setAttribute('aria-expanded','false');
+    nav.setAttribute('data-open','false'); document.documentElement.classList.remove('menu-open');
+    hideTimer = setTimeout(function(){ menu.setAttribute('aria-hidden','true'); },480);
+  }
+  btn.addEventListener('click', function(){
+    if(menu.classList.contains('is-open')) closeMenu(); else openMenu();
+  });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeMenu(); });
+  Array.prototype.forEach.call(menu.querySelectorAll('a'), function(a){
+    a.addEventListener('click', closeMenu);
+  });
 
-			</div>
+  // ---- Scroll reveal ----
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var targets = document.querySelectorAll('[data-reveal]');
+  if(reduce || !('IntersectionObserver' in window)){
+    Array.prototype.forEach.call(targets, function(t){ t.classList.add('is-visible'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('is-visible'); io.unobserve(en.target); }
+      });
+    }, { threshold:0.12, rootMargin:'0px 0px -8% 0px' });
+    Array.prototype.forEach.call(targets, function(t){ io.observe(t); });
+  }
+})();
 
-		<!-- BG -->
-			<div id="bg"></div>
+/* =========================================================================
+   HERO — FLUID TRAIL "SIGNAL DECODE" REVEAL  (Three.js + GLSL)
+   Reveals a clean DECODED name beneath an ENCODED / noisy signal.
+   ========================================================================= */
+(function(){
+  var CONFIG = {
+    simSize: 500,
+    decay: 0.97,
+    lineWidth: 0.09,
+    perFrameIntensity: 0.3,
+    revealThreshold: 0.02,
+    edgeWidthBase: 0.004,
+    haloUpperMul: 2.0,
+    haloMixStrength: 0.35,
+    haloGray: [0.12,0.12,0.12],
+    idleThresholdMs: 2500,
+    idleEaseInMs: 1500,
+    autoLerp: 0.05,
+    stopAfterMs: 50,
+    maxTextureSize: 4096
+  };
 
-		<!-- Scripts -->
-			<script src="static/assets/js/jquery.min.js"></script>
-			<script src="static/assets/js/browser.min.js"></script>
-			<script src="static/assets/js/breakpoints.min.js"></script>
-			<script src="static/assets/js/util.js"></script>
-			<script src="static/assets/js/main.js"></script>
+  var canvas = document.getElementById('heroCanvas');
+  if(!window.THREE || !canvas){ document.body.classList.add('no-webgl'); return; }
 
-	</body>
+  var vertexShader = [
+    'varying vec2 vUv;',
+    'void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }'
+  ].join('\n');
+
+  var fluidFragmentShader = [
+    'uniform sampler2D uPrevTrails;',
+    'uniform vec2 uMouse; uniform vec2 uPrevMouse; uniform vec2 uResolution;',
+    'uniform float uDecay; uniform bool uIsMoving;',
+    'varying vec2 vUv;',
+    'void main(){',
+    '  vec4 prev = texture2D(uPrevTrails, vUv);',
+    '  float newValue = prev.r * uDecay;',
+    '  if(uIsMoving){',
+    '    vec2 dir = uMouse - uPrevMouse;',
+    '    float len = length(dir);',
+    '    if(len > 0.001){',
+    '      vec2 d = dir / len;',
+    '      vec2 toPx = vUv - uPrevMouse;',
+    '      float proj = clamp(dot(toPx, d), 0.0, len);',
+    '      vec2 closest = uPrevMouse + proj * d;',
+    '      float dist = length(vUv - closest);',
+    '      float lineWidth = 0.09;',
+    '      float intensity = smoothstep(lineWidth, 0.0, dist) * 0.3;',
+    '      newValue += intensity;',
+    '    }',
+    '  }',
+    '  gl_FragColor = vec4(newValue, 0.0, 0.0, 1.0);',
+    '}'
+  ].join('\n');
+
+  var displayFragmentShader = [
+    'uniform sampler2D uFluid; uniform sampler2D uTopTexture; uniform sampler2D uBottomTexture;',
+    'uniform vec2 uResolution; uniform vec2 uTopTextureSize; uniform vec2 uBottomTextureSize;',
+    'uniform float uDpr;',
+    'varying vec2 vUv;',
+    'vec2 getCoverUV(vec2 uv, vec2 ts){',
+    '  if(ts.x < 1.0 || ts.y < 1.0) return uv;',
+    '  vec2 s = uResolution / ts;',
+    '  float scale = max(s.x, s.y);',
+    '  vec2 scaled = ts * scale;',
+    '  vec2 offset = (uResolution - scaled) * 0.5;',
+    '  return (uv * uResolution - offset) / scaled;',
+    '}',
+    'void main(){',
+    '  float fluid = texture2D(uFluid, vUv).r;',
+    '  vec2 topUV = getCoverUV(vUv, uTopTextureSize);',
+    '  vec2 bottomUV = getCoverUV(vUv, uBottomTextureSize);',
+    '  vec4 topColor = texture2D(uTopTexture, topUV);',
+    '  vec4 bottomColor = texture2D(uBottomTexture, bottomUV);',
+    '  float threshold = 0.02;',
+    '  float edgeWidth = 0.004 / uDpr;',
+    '  float t = smoothstep(threshold, threshold + edgeWidth, fluid);',
+    '  float halo = smoothstep(0.0, threshold * 2.0, fluid) * (1.0 - t);',
+    '  vec3 trailGray = vec3(0.12);',
+    '  vec3 tintedTop = mix(topColor.rgb, trailGray, halo * 0.35);',
+    '  vec4 finalColor = mix(vec4(tintedTop, topColor.a), bottomColor, t);',
+    '  gl_FragColor = finalColor;',
+    '}'
+  ].join('\n');
+
+  var renderer;
+  try{
+    renderer = new THREE.WebGLRenderer({ canvas:canvas, antialias:true, precision:'highp' });
+  }catch(e){ document.body.classList.add('no-webgl'); return; }
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  var dpr = Math.min(window.devicePixelRatio||1, 2);
+  renderer.setPixelRatio(dpr);
+
+  var scene = new THREE.Scene();
+  var simScene = new THREE.Scene();
+  var camera = new THREE.OrthographicCamera(-1,1,1,-1,0,1);
+
+  var rtOpts = { minFilter:THREE.LinearFilter, magFilter:THREE.LinearFilter, format:THREE.RGBAFormat, type:THREE.HalfFloatType };
+  var pingPong = [
+    new THREE.WebGLRenderTarget(CONFIG.simSize, CONFIG.simSize, rtOpts),
+    new THREE.WebGLRenderTarget(CONFIG.simSize, CONFIG.simSize, rtOpts)
+  ];
+  var currentTarget = 0;
+  // clear both
+  for(var i=0;i<2;i++){ renderer.setRenderTarget(pingPong[i]); renderer.clear(); }
+  renderer.setRenderTarget(null);
+
+  var mouse = new THREE.Vector2(0.5,0.5);
+  var prevMouse = new THREE.Vector2(0.5,0.5);
+  var isMoving = false;
+  var lastMoveTime = 0;
+  var autoMouse = new THREE.Vector2(0.5,0.5);
+  var prevAutoMouse = new THREE.Vector2(0.5,0.5);
+
+  // ---- placeholder textures (so it animates instantly) ----
+  function solidTexture(color){
+    var c = document.createElement('canvas'); c.width=4; c.height=4;
+    var x = c.getContext('2d'); x.fillStyle=color; x.fillRect(0,0,4,4);
+    var tx = new THREE.CanvasTexture(c); tx.needsUpdate=true; return tx;
+  }
+  var topTex = solidTexture('#07070a');
+  var bottomTex = solidTexture('#0c0b0a');
+  var topSize = new THREE.Vector2(4,4);
+  var bottomSize = new THREE.Vector2(4,4);
+
+  var trailsMaterial = new THREE.ShaderMaterial({
+    uniforms:{
+      uPrevTrails:{value:null}, uMouse:{value:new THREE.Vector2(0.5,0.5)},
+      uPrevMouse:{value:new THREE.Vector2(0.5,0.5)}, uResolution:{value:new THREE.Vector2(CONFIG.simSize,CONFIG.simSize)},
+      uDecay:{value:CONFIG.decay}, uIsMoving:{value:false}
+    },
+    vertexShader:vertexShader, fragmentShader:fluidFragmentShader
+  });
+  var displayMaterial = new THREE.ShaderMaterial({
+    uniforms:{
+      uFluid:{value:null}, uTopTexture:{value:topTex}, uBottomTexture:{value:bottomTex},
+      uResolution:{value:new THREE.Vector2(window.innerWidth*dpr, window.innerHeight*dpr)},
+      uTopTextureSize:{value:topSize}, uBottomTextureSize:{value:bottomSize},
+      uDpr:{value:dpr}
+    },
+    vertexShader:vertexShader, fragmentShader:displayFragmentShader
+  });
+
+  var geo = new THREE.PlaneGeometry(2,2);
+  var simMesh = new THREE.Mesh(geo, trailsMaterial); simScene.add(simMesh);
+  var displayMesh = new THREE.Mesh(geo, displayMaterial); scene.add(displayMesh);
+
+  /* ---------- Procedural "signal" textures ---------- */
+  function makeCanvas(w,h){ var c=document.createElement('canvas'); c.width=w; c.height=h; return c; }
+
+  function drawDecoded(w,h){
+    var c = makeCanvas(w,h); var x = c.getContext('2d');
+    x.fillStyle = '#0b0a09'; x.fillRect(0,0,w,h);
+    // soft radial light from lower-center
+    var g = x.createRadialGradient(w*0.5, h*0.72, 0, w*0.5, h*0.72, Math.max(w,h)*0.75);
+    g.addColorStop(0,'rgba(60,56,48,0.55)'); g.addColorStop(1,'rgba(0,0,0,0)');
+    x.fillStyle=g; x.fillRect(0,0,w,h);
+    // faint settled contour lines
+    x.strokeStyle='rgba(244,241,234,0.05)'; x.lineWidth=1;
+    for(var ly=0;ly<14;ly++){ var yy=h*(ly+1)/15; x.beginPath(); for(var px=0;px<=w;px+=18){ var oy=yy+Math.sin(px*0.01+ly)*6; if(px===0)x.moveTo(px,oy); else x.lineTo(px,oy);} x.stroke(); }
+    // top-left status
+    x.fillStyle='#c0392b'; x.beginPath(); x.arc(w*0.5-ftext(w,0.16)*1.7, h*0.30, Math.max(3,w*0.004),0,7); x.fill();
+    x.fillStyle='rgba(244,241,234,0.7)'; x.font='400 '+ftext(w,0.018)+'px "DM Mono", monospace';
+    x.textAlign='center'; x.textBaseline='alphabetic';
+    x.save(); x.translate(w*0.5,h*0.30); x.fillText('●  S I G N A L   L O C K E D', 0, ftext(w,0.006)); x.restore();
+    // name
+    x.fillStyle='#f4f1ea'; x.textAlign='center'; x.textBaseline='middle';
+    var fs = ftext(w,0.12);
+    x.font='400 '+fs+'px "Instrument Serif", Georgia, serif';
+    x.fillText('Caglar Togan', w*0.5, h*0.5);
+    // title
+    x.fillStyle='rgba(244,241,234,0.62)'; x.font='400 '+ftext(w,0.026)+'px "DM Mono", monospace';
+    x.fillText('L I V E   S T R E A M I N G   /   B R O A D C A S T   E N G I N E E R', w*0.5, h*0.5+fs*0.78);
+    // slash tagline bottom
+    x.fillStyle='rgba(192,57,43,0.85)'; x.font='400 '+ftext(w,0.03)+'px "Instrument Serif", Georgia, serif';
+    x.fillText('Signal in  /  Stream out', w*0.5, h*0.84);
+    var tex = new THREE.CanvasTexture(c); tex.needsUpdate=true;
+    return { tex:tex, w:w, h:h };
+  }
+
+  function drawEncoded(w,h){
+    var c = makeCanvas(w,h); var x = c.getContext('2d');
+    x.fillStyle = '#07070a'; x.fillRect(0,0,w,h);
+    // dense scanlines
+    x.fillStyle='rgba(255,255,255,0.05)';
+    for(var sy=0; sy<h; sy+=3){ x.fillRect(0,sy,w,1); }
+    // random static specks
+    var specks = Math.floor(w*h/900);
+    for(var s=0;s<specks;s++){
+      var a = Math.random()*0.35;
+      x.fillStyle='rgba(255,255,255,'+a.toFixed(3)+')';
+      x.fillRect(Math.random()*w, Math.random()*h, 1+Math.random()*2, 1+Math.random());
+    }
+    // glitch displacement bars
+    for(var b=0;b<10;b++){
+      var by=Math.random()*h, bh=4+Math.random()*22;
+      x.fillStyle='rgba(255,255,255,'+(0.04+Math.random()*0.08).toFixed(3)+')';
+      x.fillRect(0,by,w,bh);
+    }
+    // bright tear lines
+    for(var tline=0;tline<4;tline++){
+      x.fillStyle='rgba(255,255,255,0.5)';
+      x.fillRect(0, Math.random()*h, w, 1);
+    }
+    // glitched name (RGB split)
+    var fs = ftext(w,0.12);
+    x.textAlign='center'; x.textBaseline='middle';
+    x.font='400 '+fs+'px "Instrument Serif", Georgia, serif';
+    var jx = w*0.012;
+    x.globalCompositeOperation='screen';
+    x.fillStyle='rgba(0,200,255,0.55)'; x.fillText('Caglar Togan', w*0.5-jx, h*0.5+2);
+    x.fillStyle='rgba(255,40,90,0.55)'; x.fillText('Caglar Togan', w*0.5+jx, h*0.5-2);
+    x.fillStyle='rgba(200,190,180,0.4)'; x.fillText('Caglar Togan', w*0.5, h*0.5);
+    x.globalCompositeOperation='source-over';
+    // mono noise label
+    x.fillStyle='rgba(255,255,255,0.35)'; x.font='400 '+ftext(w,0.024)+'px "DM Mono", monospace';
+    x.fillText('— — —   N O   S I G N A L   —   D E C O D I N G   — — —', w*0.5, h*0.5+fs*0.8);
+    var tex = new THREE.CanvasTexture(c); tex.needsUpdate=true;
+    return { tex:tex, w:w, h:h };
+  }
+  function ftext(w, factor){ return Math.max(9, Math.round(w*factor)); }
+
+  function regenerate(){
+    var w = Math.min(Math.round(window.innerWidth*dpr), 2048);
+    var h = Math.min(Math.round(window.innerHeight*dpr), 2048);
+    if(w<2||h<2) return;
+    var enc = drawEncoded(w,h);
+    var dec = drawDecoded(w,h);
+    if(topTex && topTex.dispose) topTex.dispose();
+    if(bottomTex && bottomTex.dispose) bottomTex.dispose();
+    topTex = enc.tex; bottomTex = dec.tex;
+    displayMaterial.uniforms.uTopTexture.value = topTex;
+    displayMaterial.uniforms.uBottomTexture.value = bottomTex;
+    displayMaterial.uniforms.uTopTextureSize.value.set(w,h);
+    displayMaterial.uniforms.uBottomTextureSize.value.set(w,h);
+  }
+
+  // generate now (fallback fonts), then again once webfonts are ready (crisp)
+  regenerate();
+  if(document.fonts && document.fonts.ready){
+    document.fonts.ready.then(function(){ regenerate(); });
+    setTimeout(regenerate, 1200);
+  }
+
+  /* ---------- input ---------- */
+  function setFromClient(cx, cy){
+    var r = canvas.getBoundingClientRect();
+    if(cx < r.left || cx > r.right || cy < r.top || cy > r.bottom){ isMoving=false; return; }
+    prevMouse.copy(mouse);
+    mouse.x = (cx - r.left)/r.width;
+    mouse.y = 1.0 - (cy - r.top)/r.height;
+    isMoving = true; lastMoveTime = performance.now();
+  }
+  window.addEventListener('mousemove', function(e){ setFromClient(e.clientX, e.clientY); }, {passive:true});
+  canvas.addEventListener('touchmove', function(e){
+    var r = canvas.getBoundingClientRect();
+    var tch = e.touches[0]; if(!tch) return;
+    if(tch.clientX>=r.left && tch.clientX<=r.right && tch.clientY>=r.top && tch.clientY<=r.bottom){ e.preventDefault(); }
+    setFromClient(tch.clientX, tch.clientY);
+  }, {passive:false});
+
+  /* ---------- resize ---------- */
+  var rzTimer=null;
+  window.addEventListener('resize', function(){
+    dpr = Math.min(window.devicePixelRatio||1, 2);
+    renderer.setPixelRatio(dpr);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    displayMaterial.uniforms.uResolution.value.set(window.innerWidth*dpr, window.innerHeight*dpr);
+    displayMaterial.uniforms.uDpr.value = dpr;
+    clearTimeout(rzTimer); rzTimer=setTimeout(regenerate, 180);
+  });
+
+  /* ---------- render loop ---------- */
+  function animate(){
+    requestAnimationFrame(animate);
+    var now = performance.now();
+    if(isMoving && now - lastMoveTime > CONFIG.stopAfterMs) isMoving=false;
+    var idleTime = now - lastMoveTime;
+    var autoActive = idleTime > CONFIG.idleThresholdMs;
+
+    var prevT = pingPong[currentTarget];
+    currentTarget = (currentTarget+1)%2;
+    var writeT = pingPong[currentTarget];
+    trailsMaterial.uniforms.uPrevTrails.value = prevT.texture;
+
+    if(autoActive){
+      var easeIn = Math.min(1,(idleTime-CONFIG.idleThresholdMs)/CONFIG.idleEaseInMs);
+      var t = now*0.001;
+      var targetX = 0.5 + 0.30*Math.sin(t*0.41) + 0.12*Math.sin(t*0.93+1.3);
+      var targetY = 0.5 + 0.28*Math.cos(t*0.37+0.5) + 0.10*Math.cos(t*1.11+2.7);
+      prevAutoMouse.copy(autoMouse);
+      autoMouse.x += (targetX-autoMouse.x)*CONFIG.autoLerp*easeIn;
+      autoMouse.y += (targetY-autoMouse.y)*CONFIG.autoLerp*easeIn;
+      trailsMaterial.uniforms.uMouse.value.copy(autoMouse);
+      trailsMaterial.uniforms.uPrevMouse.value.copy(prevAutoMouse);
+      trailsMaterial.uniforms.uIsMoving.value = true;
+      mouse.copy(autoMouse); prevMouse.copy(prevAutoMouse);
+    } else {
+      trailsMaterial.uniforms.uMouse.value.copy(mouse);
+      trailsMaterial.uniforms.uPrevMouse.value.copy(prevMouse);
+      trailsMaterial.uniforms.uIsMoving.value = isMoving;
+      autoMouse.copy(mouse); prevAutoMouse.copy(mouse);
+    }
+
+    renderer.setRenderTarget(writeT);
+    renderer.render(simScene, camera);
+    displayMaterial.uniforms.uFluid.value = writeT.texture;
+    renderer.setRenderTarget(null);
+    renderer.render(scene, camera);
+  }
+  animate();
+})();
+</script>
+</body>
 </html>
